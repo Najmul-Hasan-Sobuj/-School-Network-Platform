@@ -1,7 +1,6 @@
 <x-admin-app-layout>
     <div class="grid place-items-center my-10">
-        <div
-            class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8  dark:border-gray-700">
+        <div class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8  dark:border-gray-700">
             <div class="grid grid-cols-3 gap-4">
                 <div class="">Role Edit</div>
                 <div></div>
@@ -13,59 +12,61 @@
         </div>
     </div>
     <div class="permissions-container">
-            <form method="POST" action="{{ route('admin.role.update', $role->id) }}"
-                class="bg-white shadow-xl border rounded px-8 pt-6 pb-8 mb-4 grid gap-4 min-w-lg">
-                @csrf
-                @method('PUT')
-                <!-- Role name input -->
-                <div>
-                    <x-input-label for="name" :value="__(' Name ')" />
-                    <x-text-input id="name" class="block mt-1 w-full" type="text" name="name"
-                        :value="$role->name" required autofocus autocomplete="name" />
-                    <x-input-error :messages="$errors->get('name')" class="mt-2" />
-                </div>
-                <!-- Group permissions -->
-                @foreach ($groups as $group)
-                    <div class="bg-gray-100 p-4 rounded-lg">
-                        <div class="flex items-center mb-5">
-                            <input type="checkbox" id="selectAllGroupPermissions_{{ $loop->iteration }}"
-                                class="mr-2 form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out select-all-group-permissions">
-                            <label for="selectAllGroupPermissions_{{ $loop->iteration }}"
-                                class="text-sm font-medium text-gray-700">
-                                <h2 class="text-lg font-semibold mb-2">{{ $group->group_name }}</h2>
-                            </label>
-                        </div>
-                        <div class="grid md:grid-cols-3 grid-cols-1 gap-4">
-                            @foreach ($permissions as $permission)
-                                @if ($permission->group_name == $group->group_name)
-                                    <div class="flex items-center">
-                                        <input type="checkbox" id="permission-{{ $permission->id }}"
-                                            name="permissions[]" value="{{ $permission->name }}"
-                                            class="mr-2 form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out permission-checkbox"
-                                            data-group="{{ $loop->parent->index }}"
-                                            {{ $role->permissions->contains($permission) ? 'checked' : '' }}>
-                                        <label for="permission-{{ $permission->id }}"
-                                            class="text-sm font-medium text-gray-700">{{ $permission->name }}</label>
-                                    </div>
-                                @endif
-                            @endforeach
-                        </div>
+        <form method="POST" action="{{ route('admin.role.update', $role->id) }}"
+            class="bg-white shadow-xl border rounded px-8 pt-6 pb-8 mb-4 grid gap-4 min-w-lg">
+            @csrf
+            @method('PUT')
+            <!-- Role name input -->
+            <div>
+                <x-input-label for="name" :value="__(' Name ')" />
+                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="$role->name"
+                    required autofocus autocomplete="name" />
+                <x-input-error :messages="$errors->get('name')" class="mt-2" />
+            </div>
+            <!-- Group permissions -->
+            @foreach ($groups as $group)
+                <div class="bg-gray-100 p-4 rounded-lg">
+                    <div class="flex items-center mb-5">
+                        <input type="checkbox" id="selectAllGroupPermissions_{{ $loop->iteration }}"
+                            class="mr-2 form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out select-all-group-permissions">
+                        <label for="selectAllGroupPermissions_{{ $loop->iteration }}"
+                            class="text-sm font-medium text-gray-700">
+                            <h2 class="text-lg font-semibold mb-2">{{ $group->group_name }}</h2>
+                        </label>
                     </div>
-                @endforeach
-                <!-- Select All checkbox for all permissions -->
-                <div class="flex items-center">
-                    <input type="checkbox" id="selectAllPermissions"
-                        class="mr-2 form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out">
-                    <label for="selectAllPermissions" class="text-sm font-medium text-gray-700">Select All</label>
+                    <div class="grid md:grid-cols-3 grid-cols-1 gap-4">
+                        @foreach ($permissions as $permission)
+                            @if ($permission->group_name == $group->group_name)
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="permission-{{ $permission->id }}" name="permissions[]"
+                                        value="{{ $permission->name }}"
+                                        class="mr-2 form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out permission-checkbox"
+                                        data-group="{{ $loop->parent->index }}"
+                                        {{ $role->permissions->contains($permission) ? 'checked' : '' }}>
+                                    <label for="permission-{{ $permission->id }}"
+                                        class="text-sm font-medium text-gray-700">{{ $permission->name }}</label>
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
                 </div>
-                <!-- Submit button -->
+            @endforeach
+            <!-- Select All checkbox for all permissions -->
+            <div class="flex items-center">
+                <input type="checkbox" id="selectAllPermissions"
+                    class="mr-2 form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out">
+                <label for="selectAllPermissions" class="text-sm font-medium text-gray-700">Select All</label>
+            </div>
+            <!-- Submit button -->
+            @if ($role->name !== 'Super Admin')
                 <div class="flex items-center justify-center">
                     <button
                         class="btn bg-[#5d77ed] text-white w-full font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                         type="submit">Submit</button>
                 </div>
-            </form>
-        </div>
+            @endif
+        </form>
+    </div>
     @push('scripts')
         <script>
             document.addEventListener('DOMContentLoaded', function() {
