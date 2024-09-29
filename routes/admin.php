@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\ConfirmablePasswordController;
 use App\Http\Controllers\Admin\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\EmailVerificationPromptController;
 use App\Http\Controllers\Admin\EmailVerificationNotificationController;
+use App\Http\Controllers\Admin\SchoolController;
 
 // Route::get('/', function () {
 //     return Redirect::route('admin.dashboard');
@@ -77,12 +78,14 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
         [
             'role'     => RoleController::class,
             'user'     => UserController::class,
-            'personal' => PersonalController::class,
             'project'  => ProjectController::class,
             'reading'  => ReadingController::class,
+            'school'  => SchoolController::class,
         ],
-        ['except' => ['show']]
     );
+
+    Route::resource('personal', PersonalController::class)->only(['index', 'show', 'destroy']);
+    Route::patch('personal/{personal}/toggle-approval', [PersonalController::class, 'toggleApproval'])->name('personal.toggleApproval');
 
     Route::resource('category', CategoryController::class);
     Route::post('/category/toggle-status/{id}', [CategoryController::class, 'toggleStatus'])->name('category.toggle-status');

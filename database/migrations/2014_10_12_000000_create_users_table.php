@@ -14,8 +14,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) { // assume table name is 'students' 
             $table->id();
+            $table->foreignId('school_id')->constrained()->onDelete('cascade');
             $table->string('name', 100)->nullable()->comment('Full name of the user');
             $table->enum('gender', ['M', 'F'])->nullable()->comment('Gender of the user: M (Male), F (Female)');
             $table->string('address', 255)->nullable()->comment('Residential address of the user');
@@ -25,25 +26,10 @@ return new class extends Migration
             $table->string('email', 100)->unique()->comment('Email address of the user');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
+            $table->boolean('is_approved')->default(0)->comment('Approval status of the user: 0 (not approved), 1 (approved)');
             $table->rememberToken();
             $table->timestamps();
         });
-
-        // Insert initial user
-        DB::table('users')->insert([
-            'name' => Str::random(10),
-            'gender' => 'M',
-            'address' => '123 Main Street',
-            'country' => 'Bangladesh',
-            'dob' => '1995-05-15',
-            'phone' => '0123456789',
-            'email' => 'user@gmail.com',
-            'email_verified_at' => now(),
-            'password' => Hash::make('user123'),
-            'remember_token' => Str::random(10),
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
     }
 
     /**

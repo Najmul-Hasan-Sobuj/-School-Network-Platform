@@ -23,8 +23,7 @@ return new class extends Migration
             $table->enum('status', ['Completed', 'In progress'])->comment('Project status');
             $table->string('file_path', 255)->nullable()->comment('Path to the uploaded project file');
 
-            // Relationships
-            $table->json('members')->nullable()->comment('List of student members involved in the project (JSON format)');
+            $table->json('members')->nullable()->comment('List of student members involved in the project (Array format)');
             $table->timestamps();
         });
     }

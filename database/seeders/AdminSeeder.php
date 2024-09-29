@@ -17,12 +17,12 @@ class AdminSeeder extends Seeder
     {
         // Admin::factory(1)->create();
         $admin = Admin::factory()->create([
-            'name' => 'admin',
+            'name' => 'Super Admin',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('admin1234'),
         ]);
 
-        $adminRole = Role::where('name', 'admin')->first();
+        $adminRole = Role::where('name', 'Super Admin')->first();
         $admin->assignRole($adminRole);
     }
 }

@@ -26,11 +26,11 @@ class Project extends Model
 
     public function getMembersAttribute($value)
     {
-        return json_decode($value, true);
+        return json_decode($value, true) ?: [];
     }
 
     public function setMembersAttribute($value)
     {
-        $this->attributes['members'] = json_encode($value);
+        $this->attributes['members'] = json_encode(array_values($value)); // Ensure the members are stored as an array
     }
 }

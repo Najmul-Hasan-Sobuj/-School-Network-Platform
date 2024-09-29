@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             PassportTokenSeeder::class,
+            SchoolSeeder::class,
             AdminSeeder::class,
             RolePermissionSeeder::class,
             CategorySeeder::class
