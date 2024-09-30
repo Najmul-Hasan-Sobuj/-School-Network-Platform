@@ -9,6 +9,19 @@
             <div class="grid grid-cols-1 gap-6">
                 <!-- Project Title -->
                 <div>
+                    <label for="user_id" class="block text-gray-700">User Name</label>
+                    <select name="user_id" id="user_id" class="w-full mt-1 p-2 border border-gray-300 rounded-lg"
+                        required>
+                        <option value="">Select Type</option>
+                        @foreach ($allMembers as $user)
+                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                        @endforeach
+                    </select>
+                    @error('type')
+                        <span class="text-red-500">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div>
                     <label for="title" class="block text-gray-700">Project Title</label>
                     <input type="text" name="title" id="title"
                         class="w-full mt-1 p-2 border border-gray-300 rounded-lg" value="{{ old('title') }}" required>

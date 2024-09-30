@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Models\Project;
+use App\Models\Reading;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +20,12 @@ use App\Http\Controllers\ProfileController;
 //     return view('welcome');
 // });
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $user = auth()->user();
+    $latestProjects = Project::where('user_id', $user->id)->latest()->take(5)->get();
+    $latestReadings = Reading::where('user_id', $user->id)->latest()->take(5)->get();
+    $school = $user->school; // Fetch the user's school
+
+    return view('dashboard', compact('latestProjects', 'latestReadings', 'school'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

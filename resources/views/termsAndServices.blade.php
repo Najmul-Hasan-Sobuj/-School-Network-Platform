@@ -43,7 +43,7 @@
                         </p>
 
                         <p class="mt-6 text-gray-600">
-                            If you have any questions about these Terms and Conditions, please <a href="#" class="text-indigo-600 underline">contact us</a>.
+                            If you have any questions about these Terms and Conditions, please <a href="https://www.linkedin.com/in/md-najmul-hasan-/" class="text-indigo-600 underline">contact us</a>.
                         </p>
                     </div>
 
@@ -59,7 +59,7 @@
                         <div class="bg-gray-50 p-6 rounded-lg shadow-md">
                             <h3 class="text-xl font-bold text-gray-900 mb-4">Need Help?</h3>
                             <p class="text-gray-700 leading-relaxed">
-                                If you have questions about these terms or your rights, don't hesitate to <a href="#" class="text-indigo-600 underline">reach out to us</a>.
+                                If you have questions about these terms or your rights, don't hesitate to <a href="https://www.linkedin.com/in/md-najmul-hasan-/" class="text-indigo-600 underline">reach out to us</a>.
                             </p>
                         </div>
                     </div>

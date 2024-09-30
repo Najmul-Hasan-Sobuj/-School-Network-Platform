@@ -14,6 +14,23 @@
             <div class="grid grid-cols-1 gap-6">
                 <!-- Reading Title -->
                 <div>
+                    <label for="user_id" class="block text-gray-700">User Name</label>
+                    <select name="user_id" id="user_id" class="w-full mt-1 p-2 border border-gray-300 rounded-lg"
+                        required>
+                        <option value="">Select User</option>
+                        @foreach ($allUsers as $user)
+                            <option value="{{ $user->id }}"
+                                {{ old('user_id', $reading ?? '') == $user->id ? 'selected' : '' }}>
+                                {{ $user->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('user_id')
+                        <span class="text-red-500">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div>
                     <label for="title" class="block text-gray-700">Reading Title</label>
                     <input type="text" name="title" id="title"
                         class="w-full mt-1 p-2 border border-gray-300 rounded-lg"
@@ -51,7 +68,8 @@
                     <select name="type" id="type" class="w-full mt-1 p-2 border border-gray-300 rounded-lg"
                         required>
                         <option value="">Select Type</option>
-                        <option value="Article" {{ old('type', $reading->type) == 'Article' ? 'selected' : '' }}>Article
+                        <option value="Article" {{ old('type', $reading->type) == 'Article' ? 'selected' : '' }}>
+                            Article
                         </option>
                         <option value="Book" {{ old('type', $reading->type) == 'Book' ? 'selected' : '' }}>Book
                         </option>

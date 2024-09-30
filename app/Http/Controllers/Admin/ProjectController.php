@@ -93,7 +93,7 @@ class ProjectController extends Controller
             $filePath = $request->file('file_path') ? uploadImage($request->file('file_path'), 'projects') : null;
 
             Project::create([
-                'user_id' => auth()->id(),
+                'user_id' => $request->user_id,
                 'title' => $request->title,
                 'start_date' => $request->start_date,
                 'end_date' => $request->end_date,
@@ -155,20 +155,18 @@ class ProjectController extends Controller
         DB::beginTransaction();
 
         try {
-            // Check if a new file is being uploaded
             if ($request->hasFile('file_path')) {
-                // Delete the old file if it exists
                 if ($project->file_path) {
                     Storage::disk('public')->delete($project->file_path);
                 }
 
-                // Upload the new file
                 $filePath = uploadImage($request->file('file_path'), 'projects');
             } else {
-                $filePath = $project->file_path; // Keep the old file path if no new file is uploaded
+                $filePath = $project->file_path; 
             }
 
             $project->update([
+                'user_id' => $request->user_id,
                 'title' => $request->title,
                 'start_date' => $request->start_date,
                 'end_date' => $request->end_date,

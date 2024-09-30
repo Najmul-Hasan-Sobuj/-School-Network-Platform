@@ -89,7 +89,7 @@ class ReadingController extends Controller
 
         try {
             Reading::create([
-                'user_id' => auth()->id(),
+                'user_id' => $request->user_id,
                 'title' => $request->title,
                 'doi' => $request->doi,
                 'year' => $request->year,
@@ -123,7 +123,8 @@ class ReadingController extends Controller
      */
     public function edit(Reading $reading)
     {
-        return view('admin.pages.reading.edit', compact('reading'));
+        $allUsers = User::all();
+        return view('admin.pages.reading.edit', compact('reading', 'allUsers'));
     }
 
     /**
@@ -146,6 +147,7 @@ class ReadingController extends Controller
 
         try {
             $reading->update([
+                'user_id' => $request->user_id,
                 'title' => $request->title,
                 'doi' => $request->doi,
                 'year' => $request->year,
